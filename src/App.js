@@ -30,9 +30,8 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ buys: [this.state.buys, this.state.newArticle], newArticle: { ...articleInitialState } });
-    const myNewData = database.ref().child('buys').set(this.state.buys);
-    console.log('Nuevos datos: ', myNewData);
+    database.ref().child('buys').push(this.state.newArticle);
+    this.setState({ newArticle: { ...articleInitialState } });
   }
 
   handleChange(event) {
@@ -50,7 +49,7 @@ class App extends Component {
         <form onSubmit={this.handleSubmit} onChange={this.handleChange} className="App-intro">
           <label htmlFor="name">Nombre del articulo: </label>
           <input type="text" value={this.state.newArticle.name} name="name" />
-          <label htmlFor="articleName">Cantidad: </label>
+          <label htmlFor="quantity">Cantidad: </label>
           <input type="number" value={this.state.newArticle.quantity} name="quantity" />
           <button type="submit">Send</button>
         </form>
